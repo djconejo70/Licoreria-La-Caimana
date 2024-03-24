@@ -1,0 +1,289 @@
+{% extends "registro/base3.html" %}  
+{% load static %}
+
+{% block headlist %}
+
+{% endblock %}
+
+
+{% block content %}
+{% comment %} Esto es lo del datatable {% endcomment %}
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css ">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css ">
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+{% comment %} <script type="text/javascript" src="static/licoreriaapp/js/script.js"></script>  {% endcomment %}
+
+
+
+<!--## Bootstrap -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+{% comment %} <link href="{% static 'licoreriaapp/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet"> {% endcomment %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+	<!-- Fonts -->
+	
+
+
+
+
+
+<div class="row" style="font-family:Calibri ">
+	<div class="col-sm-11 col-md-6 col-lg-4 col-xl-4 ">
+		{% if messages %}
+			{% for message in messages %}
+			<script>
+				Swal.fire({
+					"title":"Tarea Realizada",
+					"text":"{{m}}",
+					"icon": "success",
+				})
+    
+			</script>
+			{% endfor %}
+		{% endif %}
+		
+
+		<div class="body" style=" padding-top: 0px; margin-left: -30px;">
+				
+			<div style = "padding-left: 0px; padding-top: -5px; margin-left: 57px; float: left; position: relative; width: 45%;  border: steelblue solid 1px;   height: 45%;">
+				<img src="../../static/licoreriaapp/img/lateral1.jpg" class="d-block w-100" alt="...">	
+			</div>
+			
+			<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel" style=" padding-top: -5px; padding-left: 0px; margin-left: 10px; position: relative;  float: left; width: 45%; 
+				border: steelblue solid 1px; height: 45%; height: auto;">
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<img src="../../static/licoreriaapp/img/carrousel1.jpg" class="d-block w-100" alt="...">
+					</div>
+					<div class="carousel-item">
+						<img src="../../static/licoreriaapp/img/carrousel2.jpg" class="d-block w-100" alt="...">
+					</div>
+					<div class="carousel-item">
+						<img src="../../static/licoreriaapp/img/carrousel3.jpg" class="d-block w-100" alt="...">
+					</div>
+					<div class="carousel-item">
+						<img src="../../static/licoreriaapp/img/carrousel4.jpg" class="d-block w-100" alt="...">
+					</div>
+					<div class="carousel-item">
+						<img src="../../static/licoreriaapp/img/carrousel5.jpg" class="d-block w-100" alt="...">
+					</div>
+				</div>		
+			</div>	
+			<div class="col-sm-11 col-md-6 col-lg-8 col-xl-12" style="margin-top:20px;" >
+				<h4 class="text-center text-green" ><span class="site-heading-lower">INVENTARIO</span></h4>
+				<div class="table-responsive col-sm-12 height:100%" style="background-color:#1e8480; color:white; font-family:Calibri; font-size:11px; color:white; ">
+					<table  class="table table-striped table-bordered table-condensed" style="width:100%; height:100%;
+					margin: 0 auto;" id="tabla_inventario" name="tabla_inventario">
+						<thead >
+							<tr style="font-family:Calibri; font-size:12px; color: white">
+								
+								<th style="text-align: left;">Articulo</th>
+								<th style="text-align: left">Presentacion</th>
+								<th style="text-align: left">Stock </th>
+								<th style="text-align: left">PVP </th>
+								<th style="text-align: center">Editar</th>
+								<th style="text-align: center">Eliminar</th>
+		
+							</tr>
+						</thead>
+						<tbody style="font-family:Calibri; font-size:11px; text-align: left">
+		
+							{% for i in articulo %}
+								<tr >                            
+									
+									<td style="text-align: left" >{{i.articulo}}</td>
+									<td style="text-align: left">{{i.tipo_unidad}}</td>
+									<td style="text-align: left" >{{i.cantidad}}</td>
+									<td style="text-align: left" >{{i.precio_sugerido_venta}}</td>
+									<td><a href="edicionArticulo/{{i.codigo_articulo}}" class="btn btn-info btn-xs " style="font-size:11px;">Editar</a></td>
+									<td><a href="eliminarArticulo/{{i.codigo_articulo}}" class="btn btn-danger btnEliminacion btn-xs" style="font-size:11px;">Eliminar</a></td>
+																	
+								</tr>                
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>		   
+			</div>
+		<div style="margin-top:20px; margin-bottom:30px;">		
+			<div class="card" style=" margin-right:30px; margin-top:10px; margin-left:80px;" >
+				<h4 class="text-center text-black"><span class="site-heading-lower">AÑADIR INVENTARIO</span></h4>
+				<div class="card-body" style="background: rgba(25, 86, 80); box-sizing: border-box; box-shadow: 0 15px 25px rgba(0,0,0,.6);
+                border-radius: 10px; ">
+					<form id="formulario_añadir" style="font-family:Calibri; font-size:12px;" action="/registrarArticulo/" method="POST">{% csrf_token %}
+						<div class="form-group" style="width: 100%;   padding: 10px 0; font-size: 16px; color: #fff;
+						margin-bottom: 10px; border: none; border-bottom: 1px solid #fff; outline: none; background: transparent;">
+							<input type="text" id="articulo" name="articulo" class="form-control" placeholder="Articulo" style="font-family:Calibri; font-size:12px;"
+								maxlength="30" required >
+						</div>
+						<div class="form-group" style="width: 100%;   padding: 10px 0; font-size: 16px; color: #fff;
+						margin-bottom: 10px; border: none; border-bottom: 1px solid #fff; outline: none; background: transparent;">
+							<input type="text" style="font-family:Calibri; font-size:12px;" id="tipo_unidad" name="tipo_unidad" class="form-control" placeholder="Presentacion" required >
+						</div>
+						<div class="form-group" style="width: 100%;   padding: 10px 0; font-size: 16px; color: #fff;
+						margin-bottom: 10px; border: none; border-bottom: 1px solid #fff; outline: none; background: transparent;">
+							<label for="cantidad" style="font-family:Calibri; font-size:12px;">Stock</label>
+							<input type="number" id="cantidad" name="cantidad" class="form-control" min="0" value="0" required >
+						</div>
+						<div class="form-group" style="width: 100%;   padding: 10px 0; font-size: 16px; color: #fff;
+						margin-bottom: 10px; border: none; border-bottom: 1px solid #fff; outline: none; background: transparent;">
+						<label for="cantidad" style="font-family:Calibri; font-size:12px;">Precio sugerido de venta</label>
+							<input type="number"style="font-family:Calibri; font-size:12px;"  id="precio_sugerido_venta" name="precio_sugerido_venta" class="form-control" min="0" value="0.00" placeholder="PVP sugerido">
+						</div>
+						<div class="form-group"style="width: 100%;   padding: 10px 0; font-size: 16px; color: #fff;
+						margin-bottom: 10px; border: none; border-bottom: 1px solid #fff; outline: none; background: transparent;">
+							<button type="submit" class="btn btn-primary btn-block text-white">Guardar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		</div>
+	
+	</div>
+	</div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block javascript_bajo %}
+
+<script type="text/javascript">
+
+$(document).ready(function () {
+	const $FormularioEditar=document.getElementById('formulario_editar');
+	const $Articulo=document.getElementById('articulo_editar');
+	const $TipoUnidad=document.getElementById('tipo_unidad_editar');
+	
+	(function() {	
+	$FormularioEditar.addEventListener('submit', function(e) {
+		let nombre = String($Articulo.value).trim();
+		let unidad = String($TipoUnidad.value).trim();	
+		if (nombre === "" || nombre === null || nombre.length === 0)  {
+		Swal.fire(
+			'Tarea no se puede realizar',
+			'ARTICULO no puede estar vacio...!',
+			'warning'
+		)
+		e.preventDefault();
+		} 
+		if (unidad === "" || unidad === null || unidad.length === 0)  {
+		Swal.fire(
+			'Tarea no se puede realizar',
+			'PRESENTACION no puede estar vacio...!',
+			'warning'
+		)
+		e.preventDefault();
+		} 
+	} );
+	
+	
+	} );
+	} );
+	
+	
+$(document).ready(function () {
+const $FormularioAñadir=document.getElementById('formulario_añadir');
+const $Articulo=document.getElementById('articulo');
+const $TipoUnidad=document.getElementById('tipo_unidad');
+
+(function() {
+
+$FormularioAñadir.addEventListener('submit', function(e) {
+let nombre = String($Articulo.value).trim();
+let unidad = String($TipoUnidad.value).trim();
+
+if (nombre === "" || nombre === null || nombre.length === 0)  {
+	Swal.fire(
+	'Tarea no se puede realizar',
+	'ARTICULO no puede estar vacio...!',
+	'warning'
+	)
+	e.preventDefault();
+} 
+if (unidad === "" || unidad === null || unidad.length === 0)  {
+	Swal.fire(
+	'Tarea no se puede realizar',
+	'PRESENTACION no puede estar vacio...!',
+	'warning'
+	)
+	e.preventDefault();
+} 
+} );
+
+} )();
+
+
+} );
+	
+$(document).ready(function () {
+
+const btnEliminacion = document.querySelectorAll(".btnEliminacion");
+btnEliminacion.forEach(btn => {
+	btn.addEventListener('click', (e) => {
+		const confirmacion = confirm('¿Seguro de eliminar este articulo?');
+		if (!confirmacion) {
+			e.preventDefault();
+		}
+	});
+});
+
+});
+	
+	
+$(document).ready(function() {
+	$('#tabla_inventario').DataTable( {
+		"language": {
+			url : 'static/licoreriaapp/datatable/spanish.txt' 
+		},
+		dom: 'Bfrtip',
+		dom: "<'row'<'col-sm-4'li><'col-sm-4 text-center'B><'col-sm-4'f>>" +
+				"<'row'<'col-sm-12'tr>>" +
+				"<'row'<'col-sm-5'i><'col-sm-7'p>>",
+		buttons: [{
+			//Botón para Excel
+			extend: 'excel',
+			footer: true,
+			title: 'Archivo',
+			filename: 'Export_File',
+			className: 'btn btn-info btn-sm',
+	
+			//Aquí es donde generas el botón personalizado
+			text: '<button style= "border: none; padding: 0; background-color: transparent; color:#FCFCFC">Excel <i class="fas fa-file-excel"></i></button>'
+		}, 
+		//Botón para PDF
+		{
+			extend: 'pdf',
+			footer: true,
+			title: 'Archivo PDF',
+			filename: 'Export_File_pdf',
+			className: 'btn btn-primary btn-sm',
+			text: '<button style= "border: none; padding: 0; background-color: transparent; color:#FCFCFC" >PDF<i class="fas fa-file-pdf"></i></button>'
+			
+		},
+
+		//Botón para print
+		{
+			extend: 'print',
+			footer: true,
+			filename: 'Export_File_print',
+			className: 'btn btn-warning btn-sm',
+			text: '<button style= "border: none; padding: 0; background-color: transparent; color:#FCFCFC" >Print<i class="fas fa-file-print"></i></span>'
+		},
+		]
+		
+		
+	} );
+	} );
+</script>    
+  
+{% endblock %}

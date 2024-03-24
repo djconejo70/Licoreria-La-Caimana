@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<!-- Website template by freewebsitetemplates.com -->
+<html>
+
+
+<head>
+	<meta charset="UTF-8">
+	<title>BODEGON LA CAIMANA</title>
+	{% load static %}
+	{% comment %} fuentes de google {% endcomment %}
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+
+	{% comment %} pluggins select2 {% endcomment %}
+	{% comment %} <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> {% endcomment %}
+	{% comment %} <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> {% endcomment %}
+
+
+
+
+
+	<link rel="stylesheet" href="../static/licoreriaapp/css/style.css" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css ">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css ">    
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
+
+	{% block headlist %}
+	{% endblock %}
+
+	{% block javascript %}
+	{% comment %} <script type="text/javascript" src="{{ STATIC_URL }}../static/licoreriaapp/js/script.js"></script> {% endcomment %}
+	{% comment %} <script type="text/javascript" src="{{ STATIC_URL }}../static/licoreriaapp/js/notificacionSwal.js"></script> {% endcomment %}
+	{% comment %} <script src="{% static '../static/lib/jquery-ui-1.13.2/external/jquery/jquery.js' %}"></script> {% endcomment %}
+	{% comment %} <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> {% endcomment %}
+	{% comment %} <script src="{% static '../static/js/autocomplete.js' %}"></script> {% endcomment %}
+	<script src="{% static 'admin/js/jquery.init.js' %}"></script>
+		
+	{% endblock %}
+
+	
+		
+
+	
+  
+    
+    
+    <!--## Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    {% comment %} <link href="{% static 'licoreriaapp/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet"> {% endcomment %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+     <!-- Fonts -->
+    
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap"> 
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" >
+    
+	
+</head>
+<body>
+	<div class="background"  >
+		<div id='uno' style="margin-bottom:-10px;">
+			<a href="https://www.bcv.org.ve/" style="color:#F7F308;   "><MARQUEE scrollamount=6 width=100% height=100% > BCV OFICIAL - COTIZACIONES DEL DIA: DOLAR ($): {{valordolar}} EURO (Є): {{valoreuro}} FECHA BCV: {{fecha}} </MARQUEE></a>
+			
+		</div> 
+		
+		
+		
+
+
+		<div class="page" >
+			<a href="http://127.0.0.1:8000/" id="logo" style="font-family: 'Dancing Script', cursive; text-align:center">BODEGON LA CAIMANA</a>
+			<div style="color:white; text-align:right; margin-top:-40px; margin-right: 80px">
+				{% comment %} {% if user.is_authenticated %}
+					Sesion: {{usuario}} &nbsp; &nbsp; <a href="{% url 'cerrar_sesion'%}" style="color:white;">Cerrar Sesion</a>
+					{% if usuario == "lmarin70"  %}
+						<a href="{% url 'Autenticacion'%}" style="color:white;">Registrar Nuevo usuario</a>
+					{% endif %}
+				{% else %}
+					Sesion: No se ha iniciado sesion <a href="{% url 'logear'%}" style="color:#F7F308;">  Login</a> 
+
+				{% endif %}
+				 {% endcomment %}
+				{% comment %} {% if user.is_authenticated %}
+                 	{{user.username}} 
+				{% endif %} {% endcomment %}
+				{{usuario}}
+
+								
+				
+			</div>
+			<div class="sidebar" >
+				<ul>
+					<li >
+						<a {% if request.path == '/' %} style="background:url(../../static/licoreriaapp/img/bg-nav-selected.png) repeat-x;
+						color:#fbf8d5;" {% endif %}href="{% url 'Home' %}">Home</a>
+					</li>
+					<li>
+						<a {% if request.path == '/articulo' %} style="background:url(../../static/licoreriaapp/img/bg-nav-selected.png) repeat-x;
+						color:#fbf8d5;" {% endif %} href="{% url 'logear' %}">Login</a>
+					</li>
+					<li>
+						<a {% if request.path == '/ventas' %} style="background:url(../../static/licoreriaapp/img/bg-nav-selected.png) repeat-x;
+						color:#fbf8d5;" {% endif %} href="{% url 'Contacto' %}">Contacto</a>
+					</li>
+					{% comment %} <li>
+						<a {% if request.path == '/reporte' %} style="background:url(../../static/licoreriaapp/img/bg-nav-selected.png) repeat-x;
+						color:#fbf8d5;" {% endif %} href="{% url 'Reportes' %}">Reportes</a>
+					</li> {% endcomment %}
+				</ul>
+				
+				<div class="first" style=" margin-top:-5px; ">
+					<div style=" padding-top: -5px; margin-top:-5px;">
+						<h3 style="text-align: center">VARIEDAD EN LICORES</h3>
+						<img src="../static/licoreriaapp/img/licores.jfif" alt="">
+						<p style="text-align: justify">
+							Contamos con la mayor variedad y alta gama de licores de la zona, asi como precios sin competencia.
+						</p>
+					</div>
+				</div>
+				<div style=" padding-top: -10px; margin-bottom:-10px; ">
+					<div style=" padding-top: -5px; margin-top:-5px; ">
+						<h3 style="text-align: center">LA MEJOR ATENCION</h3>
+						<p style="text-align: justify;">
+							Recibiras la mejor atencion de nuestro personal
+						</p>
+						<img src="../static/licoreriaapp/img/caimanas1.jpg" alt="">
+						<p style="text-align: justify;">Nuestro personal tiene la mas amplia experiencia y le podra brindar la mejor asesoria a la hora de escoger.</p>
+					</div>
+				</div>
+			</div>
+
+			
+			 <!-- Contenido cambiante -->
+				{% block content %}
+
+				{% endblock %}
+
+
+
+
+
+
+			<div class="footer" >
+				
+				<div style="padding-bottom:15px; margin-top:10px;">
+					
+					<div class="col-8" style="width:60%; margin-left:4px; margin-top:6px;" >						
+						<h4>Nuestra ubicacion:</h4>    
+						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.8841203668444!2d-63.556159599999994!3d8.113280099999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8dce87de4b920a4d%3A0xd3fd4866a26fd4ce!2sBodegon%20La%20Caimana!5e0!3m2!1ses!2sve!4v1686729580158!5m2!1ses!2sve" 
+						width="765" height="130" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+					</div>
+						
+					<div class="connect" style="width:19%; padding-bottom:-15px; margin-top:6px;">
+						<h4>Siganos en:</h4>
+						<a href="http://freewebsitetemplates.com/go/twitter/" id="twitter">twitter</a> <a href="http://freewebsitetemplates.com/go/facebook/" id="facebook">facebook</a> <a href="http://freewebsitetemplates.com/go/googleplus/" id="googleplus">google+</a>
+					</div>
+					<div class="col" style="width:20%; margin-top:6px;">
+						<h4>Bodegon "LA CAIMANA"</h4>
+						<img alt="Silverfox" class="img-fluid" src="../static/licoreriaapp/img/licoreria2.jpg" style="text-align:justify;">
+    
+
+					</div>
+				  </div>				
+				<p>
+					&#169; Copyright 2023. All rights reserved. Developed by Luis Marin
+				</p>
+			</div>
+		</div>
+	</div>
+
+</div>
+<script src="https://kit.fontawesome.com/0e267fa081.js" crossorigin="anonymous"></script>
+
+
+  
+</body>
+{% block javascript_bajo %}
+
+<script type="text/javascript">
+
+$(document).ready(function () {
+	const $FormularioEditar=document.getElementById('formulario_editar');
+	const $Articulo=document.getElementById('articulo_editar');
+	const $TipoUnidad=document.getElementById('tipo_unidad_editar');
+	
+	(function() {
+	  
+	
+	$FormularioEditar.addEventListener('submit', function(e) {
+	  let nombre = String($Articulo.value).trim();
+	  let unidad = String($TipoUnidad.value).trim();
+	
+	  if (nombre === "" || nombre === null || nombre.length === 0)  {
+		Swal.fire(
+		  'Tarea no se puede realizar',
+		  'ARTICULO no puede estar vacio...!',
+		  'warning'
+		)
+		e.preventDefault();
+	  } 
+	  if (unidad === "" || unidad === null || unidad.length === 0)  {
+		Swal.fire(
+		  'Tarea no se puede realizar',
+		  'PRESENTACION no puede estar vacio...!',
+		  'warning'
+		)
+		e.preventDefault();
+	  } 
+	} );
+	
+	
+	} );
+	} );
+	
+  
+  $(document).ready(function () {
+  const $FormularioAñadir=document.getElementById('formulario_añadir');
+  const $Articulo=document.getElementById('articulo');
+  const $TipoUnidad=document.getElementById('tipo_unidad');
+  
+  (function() {
+  
+  $FormularioAñadir.addEventListener('submit', function(e) {
+	let nombre = String($Articulo.value).trim();
+	let unidad = String($TipoUnidad.value).trim();
+  
+	if (nombre === "" || nombre === null || nombre.length === 0)  {
+	  Swal.fire(
+		'Tarea no se puede realizar',
+		'ARTICULO no puede estar vacio...!',
+		'warning'
+	  )
+	  e.preventDefault();
+	} 
+	if (unidad === "" || unidad === null || unidad.length === 0)  {
+	  Swal.fire(
+		'Tarea no se puede realizar',
+		'PRESENTACION no puede estar vacio...!',
+		'warning'
+	  )
+	  e.preventDefault();
+	} 
+  } );
+  
+  } )();
+  
+  
+  } );
+  
+  $(document).ready(function () {
+  
+	const btnEliminacion = document.querySelectorAll(".btnEliminacion");
+  
+	btnEliminacion.forEach(btn => {
+		btn.addEventListener('click', (e) => {
+			const confirmacion = confirm('¿Seguro de eliminar este articulo?');
+			if (!confirmacion) {
+				e.preventDefault();
+			}
+		});
+	});
+	
+  });
+  
+  
+  $(document).ready(function() {
+	  $('#tabla_inventario').DataTable( {
+		  "language": {
+			  url : 'static/licoreriaapp/datatable/spanish.txt' 
+			},
+		  dom: 'Bfrtip',
+		  dom: "<'row'<'col-sm-4'li><'col-sm-4 text-center'B><'col-sm-4'f>>" +
+				  "<'row'<'col-sm-12'tr>>" +
+				  "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+		  buttons: [{
+			  //Botón para Excel
+			  extend: 'excel',
+			  footer: true,
+			  title: 'Archivo',
+			  filename: 'Export_File',
+			  className: 'btn btn-info btn-sm',
+	  
+			  //Aquí es donde generas el botón personalizado
+			  text: '<button style= "border: none; padding: 0; background-color: transparent; color:#FCFCFC">Excel <i class="fas fa-file-excel"></i></button>'
+			}, 
+			//Botón para PDF
+			{
+			  extend: 'pdf',
+			  footer: true,
+			  title: 'Archivo PDF',
+			  filename: 'Export_File_pdf',
+			  className: 'btn btn-primary btn-sm',
+			  text: '<button style= "border: none; padding: 0; background-color: transparent; color:#FCFCFC" >PDF<i class="fas fa-file-pdf"></i></button>'
+			  
+			},
+  
+		  //Botón para print
+		  {
+			  extend: 'print',
+			  footer: true,
+			  filename: 'Export_File_print',
+			  className: 'btn btn-warning btn-sm',
+			  text: '<button style= "border: none; padding: 0; background-color: transparent; color:#FCFCFC" >Print<i class="fas fa-file-print"></i></span>'
+		  },
+		  ]
+		  
+		  
+	  } );
+  } );
+</script>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+		
+{% endblock %}
+
+</html>

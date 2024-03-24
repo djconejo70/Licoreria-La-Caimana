@@ -1,0 +1,194 @@
+{% block headlist %}
+
+
+{% endblock %}
+
+{% block javascript %}
+
+
+
+{% endblock %}
+
+{% if messages %}
+			{% for message in messages %}
+			<script>
+          Swal.fire({
+            "title":"{{message}}",
+            "text":"{{m}}",
+            "icon": "success",
+          })     
+    
+			</script>
+			{% endfor %}
+		{% endif %}
+<div class="col-lg-16">
+    <div class="card card-secondary">
+      {% comment %} <form id="formulario_añadir"  action="/registrarVenta/" method="GET">{% csrf_token %} {% endcomment %}
+					
+        <div class="card-header">
+          <h3 class="card-title" style="font-size: 16px;"><i class="fas fa-shopping-cart"></i> FACTURA</h3>
+        </div>
+        <div class="card-body" style="font-size: 12px;">
+          
+          <div class="form-group">
+            
+            <label style="display: inline-block; width: 130px;">Fecha de venta:</label>
+            <input type="date" style="border: 0;" id="fechaActual" value=""  />                         
+            {% comment %} {{ form.fecha }} {% endcomment %}
+        </div>
+        <div class="form-group">
+            <label style="display: inline-block; width: 130px;">Cliente:</label>
+            <input type="text" placeholder="Nombre" style="border: 0; outline: none; background-color: #dfe;" colspan="3" id="cliente" name="cliente" />
+            
+        </div>
+        <div class="form-group">
+          <label style="display: inline-block; width: 130px;">CI o Rif:</label>
+          <input type="text" placeholder="Cedula de identidad" style="border: 0; outline: none; background-color: #dfe;" colspan="3" />
+            
+          {% comment %} {{ form.ci_rif }} {% endcomment %}
+        </div>                      
+          <div class="form-group">
+            <label style="display: inline-block; width: 130px;">Total a pagar en $:</label>
+            {{ total_carrito  }} $
+            {% comment %} {{ valordolar }}Bs {% endcomment %}
+          </div><div class="form-group">
+            <label style="display: inline-block; width: 130px;">Total a pagar en Bs:</label>
+            {{ totalbs }} Bs
+          </div>          
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label>Buscador de productos:</label>
+                
+                <div class="input-group"> 
+                  {% comment %} <form  id="añadir_datatable" method="GET" action="{% url 'agregar'  %}" id="form_dt">                       			 {% endcomment %}
+                  <form  id="añadir_datatable" method="GET" id="form_dt">    			
+                    <select name="codigo_articulo"  id="codigo_articulo" 
+                      class="admin-autocomplete font-size: 11px form-control-lg" data-ajax--cache="true"
+                      data-ajax--delay="250" data-ajax--type="GET" data-ajax--url="/admin/autocomplete/"
+                       data-app-label="licoreriaapp" data-model-name="venta" data-field-name="codigo_articulo"
+                       data-theme="admin-autocomplete" data-allow-clear="false" data-placeholder="" lang="es" style="colspan:8;">
+                    </select>
+                    <span class="input-group-append">
+                       
+                      <button   class="btn btn-danger btn-flat btnTest" value="codigo_articulo"  id="select_articulo_btn" onclick="select_articulo()"><i class="fa-solid fa-plus fa-beat" ></i></button>
+                      
+                    </span>
+                  </form>
+                </div>
+            </div>
+            
+            <div class="alert alert-primary" role="alert">
+              <table class="table table-bordered" id='tblProductos' name='tblProductos'>
+                <thead>
+                  <tr>
+                    <th scope="row" colspan="7" class="text-center">LISTA DE ARTICULOS</th>
+                  </tr>
+                  <tr>
+                    
+                    <th scope="col">Cantidad Venta</th>
+                    <th scope="col">Articulo</th>
+                    <th scope="col">Presentacion</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">PVP $</th>
+                    <th scope="col">SubTotal($)</th>
+                    <th scope="col">Accion
+
+                    </th>
+                    
+                  </tr>
+                </thead>
+                <tbody text-align="left" id="cuerpo" name="cuerpo">
+                </tbody>                   
+                     <tr>
+                       <th scope="row">Total:</th>
+                       <td colspan="1"></td>
+                     </tr> 
+                   
+              </table>
+              
+              </div>
+              <div class="row text-center">
+                  <div class="col-6"><a href="{% url 'limpiar'  %}" class="btn btn-danger" style="color: white;">Limpiar</a></div>
+                  {% comment %} <div class="col-6"><a href="#" class="btn btn-success" style="color: white;">Facturar</a></div> {% endcomment %}
+                  <div class="col-6"><button type="submit" class="btn btn-success" style="color: white;">Facturar</button></div>
+              </div>            
+        </div>
+      {% comment %} </form> {% endcomment %}
+
+    </div>
+</div>
+
+
+{% block javascript_bajo %}
+<script type="text/javascript">
+
+ 
+
+function select_articulo(){ 
+  event.preventDefault();
+  var codigo_articulo = document.querySelector('#codigo_articulo');
+  var selected = codigo_articulo[codigo_articulo.selectedIndex].text;
+  var arreglo = selected.split("Presentacion:");
+  var articulo=arreglo[0]
+  var arreglo2=arreglo[1];
+  var presentacion_arreglo=arreglo2.split("stock:");
+  var presentacion=presentacion_arreglo[0];
+  var stock_arreglo=presentacion_arreglo[1];
+  var stock_arreglo2=stock_arreglo.split("Precio:");
+  var stock=stock_arreglo2[0];
+  var precio=stock_arreglo2[1];
+  var cantidad=1;
+  var sw_existe = 0;    
+  if(stock > 0)
+  {
+    var fila=codigo_articulo;
+    cadena="<tr  id=\"" + fila + "\">";    
+    cadena += "<td><input id=\"" + 'cantidad_' + fila + "\" '      type=\'number\' min=\'1\'' max=\'999999999999' value=\'1' style='width : 50px; heigth : 6px' </input></td>";
+    cadena += "<td>" + articulo + "</td>";
+    cadena += "<td>" + presentacion + "</td>";
+    cadena += "<td>" + stock + "</td>";
+    cadena += "<td>" + precio + "</td>";
+    cadena +="<td>" + "" + "</td>"
+    cadena +="<td><button class='btn btn-primary btn-xs'  onclick='sumaritems(this)'>+</button><button class='btn btn-info btn-xs'>-</button><button class='btn btn-danger btn-xs'>x</button></td> </tr>";
+    var btn = document.createElement("TR");
+    btn.innerHTML=cadena;
+    document.getElementById("cuerpo").appendChild(btn);
+    {% comment %} validar_item(fila, cadena); {% endcomment %}
+  }
+  else
+  {
+    alert('NO EXISTE STOCK');
+  }
+}
+
+
+
+function sumaritems(fila){
+  var registro = $(fila).closest('tr').attr('cantidad_');
+  var cantidad = parseInt(registro);
+  alert(cantidad)
+}
+
+
+  {% comment %} var x = $("#num" ).val(); 
+  o usas $(obj_cantidad).val(x);  
+  x=++x
+  alert(x)
+  document.getElementById("num").value = x;     {% endcomment %}
+  
+
+  window.onload = function(){
+  var fecha = new Date(); //Fecha actual
+  var mes = fecha.getMonth()+1; //obteniendo mes
+  var dia = fecha.getDate(); //obteniendo dia
+  var ano = fecha.getFullYear(); //obteniendo año
+  if(dia<10)
+    dia='0'+dia; //agrega cero si el menor de 10
+  if(mes<10)
+    mes='0'+mes //agrega cero si el menor de 10
+  document.getElementById('fechaActual').value=ano+"-"+mes+"-"+dia;
+}
+</script>
+{% endblock %}
+

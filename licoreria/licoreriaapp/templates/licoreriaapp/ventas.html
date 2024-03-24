@@ -1,0 +1,88 @@
+{% extends "registro/base3.html" %}
+
+{% load static %}
+
+{% block headlist %}
+ 
+
+
+ <link rel="stylesheet" href="/static/admin/css/base.css">
+
+  <link rel="stylesheet" href="/static/admin/css/dark_mode.css">
+  <script src="/static/admin/js/theme.js"></script>
+
+
+  <link rel="stylesheet" href="/static/admin/css/nav_sidebar.css">
+  <script src="/static/admin/js/nav_sidebar.js" defer></script>
+
+<link rel="stylesheet" href="/static/admin/css/forms.css">
+
+
+<script src="/admin/jsi18n/"></script>
+<link href="/static/admin/css/vendor/select2/select2.css" media="screen" rel="stylesheet">
+<link href="/static/admin/css/autocomplete.css" media="screen" rel="stylesheet">
+<script src="/static/admin/js/vendor/jquery/jquery.js"></script>
+
+<script src="/static/admin/js/vendor/select2/select2.full.js"></script>
+
+<script src="/static/admin/js/vendor/select2/i18n/es.js"></script>
+<script src="/static/admin/js/jquery.init.js"></script>
+
+<script src="/static/admin/js/autocomplete.js"></script>
+{% comment %} el ajax de la busqueda y la tabla {% endcomment %}
+<script type="text/javascript" src="{%  static 'licoreriaapp/js/ajax.js' %}"></script>
+
+
+{% endblock %}
+
+
+{% block content %}
+<div class="body" style=" padding-top: 0px; margin-left: -30px;">
+			
+    <div style = "padding-left: 0px; padding-top: -5px; margin-left: 57px; float: left; position: relative; width: 45%;  border: steelblue solid 1px;   height: 45%;">
+        <img src="../../static/licoreriaapp/img/lateral_ventas.jpg" class="d-block w-100" alt="...">	
+    </div>
+    
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel" style=" padding-top: -5px; padding-left: 0px; margin-left: 10px; position: relative;  float: left; width: 45%; 
+        border: steelblue solid 1px; height: 45%; height: auto;">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="../../static/licoreriaapp/img/img_ventas1.jpg" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="../../static/licoreriaapp/img/img_ventas2.jpg" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="../../static/licoreriaapp/img/img_ventas3.jpg" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="../../static/licoreriaapp/img/img_ventas4.jpg" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="../../static/licoreriaapp/img/img_ventas5.jpg" class="d-block w-100" alt="...">
+          </div>
+        </div>		
+    </div>    
+    <div class="row" style=" padding-top: 10px; margin-left: 0px;">
+      
+    {% include "./widget.html" %}
+
+       
+    </div>
+  </div>
+            
+</div>
+  
+{% endblock %}
+
+{% block javascript_bajo %}
+
+
+		
+{% endblock %}
+
+
+
+
+
+

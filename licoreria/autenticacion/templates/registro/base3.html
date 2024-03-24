@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<!-- Website template by freewebsitetemplates.com -->
+<html>
+
+
+<head>
+	<meta charset="UTF-8">
+	<title>BODEGON LA CAIMANA</title>
+	{% load static %}
+	{% comment %} fuentes de google {% endcomment %}
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+
+	{% comment %} pluggins select2 {% endcomment %}
+	{% comment %} <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> {% endcomment %}
+	{% comment %} <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> {% endcomment %}
+
+
+
+
+
+	<link rel="stylesheet" href="../static/licoreriaapp/css/style.css" type="text/css">
+    
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
+
+	{% block headlist %}
+	{% endblock %}
+
+	{% block javascript %}
+	{% comment %} <script type="text/javascript" src="{{ STATIC_URL }}../static/licoreriaapp/js/script.js"></script>  {% endcomment %}
+	<script type="text/javascript" src="{{ STATIC_URL }}../static/licoreriaapp/js/notificacionSwal.js"></script>
+	<script src="{% static '../static/lib/jquery-ui-1.13.2/external/jquery/jquery.js' %}">
+	{% comment %} <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> {% endcomment %}
+	{% comment %} <script src="{% static '../static/js/autocomplete.js' %}"></script> {% endcomment %}
+	<script src="{% static 'admin/js/jquery.init.js' %}"></script>
+		
+	{% endblock %}
+
+	
+		
+
+	
+  
+    
+    
+    <!--## Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    {% comment %} <link href="{% static 'licoreriaapp/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet"> {% endcomment %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+     <!-- Fonts -->
+    
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap"> 
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" >
+    
+	
+</head>
+<body>
+	<div class="background"  >
+		<div id='uno' style="margin-bottom:-10px;">
+			<a href="https://www.bcv.org.ve/" style="color:#F7F308;   "><MARQUEE scrollamount=6 width=100% height=100% > BCV OFICIAL - COTIZACIONES DEL DIA: DOLAR ($): {{valordolar}} EURO (Є): {{valoreuro}} FECHA BCV: {{fecha}} </MARQUEE></a>
+			
+		</div> 
+		<div class="page" >
+			<a href="http://127.0.0.1:8000/" id="logo" style="font-family: 'Dancing Script', cursive; text-align:center">BODEGON LA CAIMANA</a>
+			
+			<div style="color:white; text-align:right; margin-top:-40px; margin-right: 80px">				
+				User: {{ usuario}}	Cerrar sesion			
+			</div>
+			<div class="sidebar" >
+				<ul>
+					<li >
+						<a {% if request.path == '/' %} style="background:url(../static/licoreriaapp/img/bg-nav-selected.png) repeat-x;
+						color:#fbf8d5;" {% endif %}href="{% url 'Home' %}">Home</a>
+					</li>
+					<li>
+						<a {% if request.path == '/articulo' %} style="background:url(../static/licoreriaapp/img/bg-nav-selected.png) repeat-x;
+						color:#fbf8d5;" {% endif %} href="{% url 'Articulo' %}">Inventario</a>
+					</li>
+					<li>
+						<a {% if request.path == '/ventas' %} style="background:url(../static/licoreriaapp/img/bg-nav-selected.png) repeat-x;
+						color:#fbf8d5;" {% endif %} href="{% url 'Ventas' %}">Ventas</a>
+					</li>
+					<li>
+						<a {% if request.path == '/reporte' %} style="background:url(../static/licoreriaapp/img/bg-nav-selected.png) repeat-x;
+						color:#fbf8d5;" {% endif %} href="{% url 'reporte' %}">Reportes</a>
+					</li>
+				</ul>
+				
+				<div class="first" style=" margin-top:-5px; ">
+					<div style=" padding-top: -5px; margin-top:-5px;">
+						<h3 style="text-align: center">VARIEDAD EN LICORES</h3>
+						<img src="../static/licoreriaapp/img/licores.jfif" alt="">
+						<p style="text-align: justify">
+							Contamos con la mayor variedad y alta gama de licores de la zona, asi como precios sin competencia.
+						</p>
+					</div>
+				</div>
+				<div style=" padding-top: -10px, margin-bottom:-10px; ">
+					<div style=" padding-top: -5px; margin-top:-5px; ">
+						<h3 style="text-align: center">LA MEJOR ATENCION</h3>
+						<p style="text-align: justify;">
+							Recibiras la mejor atencion de nuestro personal
+						</p>
+						<img src="../static/licoreriaapp/img/caimanas1.jpg" alt="">
+						<p style="text-align: justify;">Nuestro personal tiene la mas amplia experiencia y le podra brindar la mejor asesoria a la hora de escoger.</p>
+					</div>
+				</div>
+			</div>
+		
+			
+			
+{% block content %}
+
+{% endblock %}
+
+
+
+
+
+
+			<div class="footer" >
+
+				<div style="padding-bottom:15px; margin-top:10px;">
+					{% include "D:\Licoreria\licoreria\licoreriaapp\templates\licoreriaapp\mapa1.html" %}
+					<div class="connect" style="width:19%; padding-bottom:-15px; margin-top:6px;">
+						<h4>Siganos en:</h4>
+						<a href="http://freewebsitetemplates.com/go/twitter/" id="twitter">twitter</a> <a href="http://freewebsitetemplates.com/go/facebook/" id="facebook">facebook</a> <a href="http://freewebsitetemplates.com/go/googleplus/" id="googleplus">google+</a>
+					</div>
+					<div class="col" style="width:20%; margin-top:6px;">
+						<h4>Bodegon "LA CAIMANA"</h4>
+						<img alt="Silverfox" class="img-fluid" src="../static/licoreriaapp/img/licoreria2.jpg" style="align:justify;">
+    				</div>
+				</div>				
+				<p>
+					&#169; Copyright 2023. All rights reserved. Developed by Luis Marin
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script src="https://kit.fontawesome.com/0e267fa081.js" crossorigin="anonymous"></script>
+
+
+  
+</body>
+{% block javascript_bajo %}
+		
+{% endblock %}
+
+</html>

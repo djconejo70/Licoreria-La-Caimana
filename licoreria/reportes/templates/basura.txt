@@ -1,0 +1,62 @@
+{% comment %} 
+var date_range = null;
+var date_now = new moment();
+
+function generate_report() {
+    var parameters = {
+        'action': 'search_report',
+        'start_date': date_now,
+        'end_date': date_now,
+    };
+
+    if (date_range !== null) {
+        parameters['start_date'] = date_range.StartDate.format('MM/DD/YYYY');
+        parameters['end_date'] = date_range.EndDate.format('MM/DD/YYYY');
+    }
+    
+    $('#datatable_ventas').DataTable({
+        responsive: true,
+        autoWidth: false,
+        destroy: true,
+        deferRender: true,
+        ajax: {
+            url:window.location.pathname,
+            type: "POST",
+            data: parameters,
+            dataSrc: ""
+        },
+                columnDefs: [
+            {
+                targets: [-2],
+                class: 'text-center',
+                orderable: false,
+                render: function (data, type, row) {
+                    return  parseFloat(data).toFixed(2);
+                
+                }
+            },
+        ],
+        initComplete: function (settings, json) {
+
+        }
+    });
+}
+
+
+$(function(){
+    $('input[id="form_reporte_venta"]').daterangepicker( {
+        locale: {
+            format: 'YYYY-MM-DD',
+            applyLabel: '<i class="fas fa-chart-pie"></i> Aplicar',
+            cancelLabel: '<i class="fas fa-times"></i> Cancelar',
+        }
+    }).on('apply.daterangepicker', function (ev, picker) {
+        date_range = picker;
+		//console.log(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY')); 
+        generate_report();
+    yyy
+    });
+    generate_report();
+}); 
+
+ {% endcomment %}

@@ -1,0 +1,341 @@
+{% block headlist %}
+{% load static %}
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+<link href="{% static '../static/lib/jquery-ui-1.13.2/jquery-ui.min.css' %}" rel="stylesheet">
+<script src="{% static '../static/lib/jquery-ui-1.13.2/jquery-ui.min.js' %}"></script>
+{% endblock %}
+{% block javascript %}
+{% endblock %}
+
+<div class="col-lg-16">
+    <div class="card card-secondary">
+      <form id="formulario_añadirVenta"   method="POST" >{% csrf_token %}
+        {% comment %} action="/registrarVentaArticulo/" {% endcomment %}				
+        <div class="card-header">
+          <h3 class="card-title" style="font-size: 16px;"><i class="fas fa-shopping-cart"></i> FACTURA</h3>
+        </div>
+        <div class="card-body" style="font-size: 12px;">
+          
+          <div class="form-group">
+            
+            <label style="display: inline-block; width: 130px; color: rgb(43, 102, 87)">Fecha de venta:</label>
+            <input type="date" style="border: 0;" id="fechaActual" value=""  />                         
+            
+        </div>
+        <div class="form-group">
+            <label style="display: inline-block; width: 130px; color: rgb(43, 102, 87)">Cliente:</label>
+            <input type="text" placeholder="Nombre" style="border: 0; outline: none; background-color: d9ffee;" colspan="3" id="cliente" name="cliente" required/>
+            
+        </div>
+        <div class="form-group">
+          <label style="display: inline-block; width: 130px; color: rgb(43, 102, 87)">CI o Rif:</label>
+          <input type="number" id="ci" placeholder="Cedula de identidad" style="border: 0; outline: none; background-color: d9ffee;" colspan="3" required/>       
+        </div>                      
+          <div class="form-group">
+            <label style="display: inline-block; width: 130px; color: rgb(43, 102, 87)" >Total a pagar en $:</label>
+            <label style="display: inline-block; width: 40px;" id="totaldolares" name="totaldolares"></label> 
+          </div>
+          <div class="form-group">
+            <label style="display: inline-block; width: 130px; color: rgb(43, 102, 87);">Total a pagar en Bs:</label>
+            <label style="display: inline-block; width: 130px;" id="totalbolivares"></label>            
+          </div>          
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label style="color: black;">Buscador de productos:</label>
+                <div class="input-group"> 
+                  {% comment %} <form  id="añadir_datatable" method="GET" action="{% url 'agregar'  %}" id="form_dt">{% endcomment %}
+                  <form  id="añadir_datatable" method="GET" id="form_dt">    			
+                    <select name="codigo_articulo"  id="codigo_articulo" 
+                      class="admin-autocomplete font-size: 11px form-control-lg" data-ajax--cache="true"
+                      data-ajax--delay="250" data-ajax--type="GET" data-ajax--url="/admin/autocomplete/"
+                       data-app-label="licoreriaapp" data-model-name="venta_detalle" data-field-name="codigo_articulo"
+                       data-theme="admin-autocomplete" data-allow-clear="false" data-placeholder="" lang="es" >
+                    </select>
+                    <span class="input-group-append">                      
+                      <button class="btn btn-danger btn-flat btnTest" value="codigo_articulo"  id="select_articulo_btn" onclick="select_articulo()"><i class="fa-solid fa-plus fa-beat" ></i></button>           
+                    </span>
+                  </form>
+                </div>
+            </div>   
+            <div class="alert alert-primary" role="alert">
+              <table class="table table-bordered" id='tblProductos' name='tblProductos'>
+                <thead>
+                  <tr>
+                    <th scope="row" colspan="7" class="text-center">LISTA DE ARTICULOS</th>
+                  </tr>
+                  <tr>               
+                    <th scope="col">Cantidad Venta</th>
+                    <th scope="col">Articulo</th>
+                    <th scope="col">Presentacion</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">PVP $</th>
+                    <th scope="col">SubTotal($)</th>
+                    <th scope="col">Accion
+                    </th>     
+                  </tr>
+                </thead>
+                <tbody text-align="left" id="cuerpo" name="cuerpo">
+                </tbody>
+                </tfoot>                  
+                      <tr>
+                        <th scope="row">Total:</th>
+                        <td colspan="1" id="total"></td>
+                      </tr>
+                </tfoot>                   
+              </table>             
+              </div>
+              <div class="row text-center">
+                  <div class="col-6"><a href="{% url 'limpiar'  %}" class="btn btn-danger" style="color: white;">Limpiar</a></div>
+                  {% comment %} <div class="col-6"><a href="#" class="btn btn-success" style="color: white;">Facturar</a></div> {% endcomment %}
+                  <div class="col-6"><button type="submit" class="btn btn-success" style="color: white;" id="facturar" name="facturar">Facturar</button></div>
+              </div>            
+        </div>
+      </form>
+    </div>
+</div>
+
+{% block javascript_bajo %}
+<script type="text/javascript">
+	function validar_item(p_fila, p_cadena)
+	{
+		var sw_existe = 0;
+		if( $("#tblProductos #cuerpo tr").length > 0)
+		{
+			$("#tblProductos #cuerpo tr").each(function(j) {
+				fila_lugar = $(this).attr("id");
+				if (fila_lugar == p_fila)
+				{      
+				 sw_existe = 1; 
+				alert("NO SE PUDO REGISTRAR, PORQUE ESTE EXISTE PRODUCTO EXISTE", "SISTEMA X");
+				}
+			});
+		}
+		if (sw_existe == 0){
+			$("#tblProductos #cuerpo").append(p_cadena);
+			$("#codigo_articulo").empty();
+		}      
+	}
+
+	function total()
+	{         
+		var acumulador_total = 0;
+		const table = document.getElementById('tblProductos');
+		for (let i =2; i < table.rows.length - 1 ; i++){       
+			let b = table.rows[i].cells[5].innerHTML;
+			acumulador_total= acumulador_total + Number(b);                    
+		}      
+		const tdTotal = document.getElementById("total");
+		tdTotal.textContent = acumulador_total;
+		totaldolares.textContent =  acumulador_total;
+		var dolar = "{{valordolar}}";
+		var n=dolar.replace(",",".");
+		var pagobsl = parseFloat(n).toFixed(2)*acumulador_total;
+		var npagobsl = pagobsl.toFixed(2);
+		totalbolivares.textContent =  npagobsl;                     
+    }
+			
+	function select_articulo()
+	{ 
+		event.preventDefault();
+		var codigo_articulo = document.querySelector('#codigo_articulo');
+		var selected = codigo_articulo[codigo_articulo.selectedIndex].text;
+		var cod = $('#codigo_articulo').val();
+		var arreglo = selected.split("Presentacion:");
+		var articulo=arreglo[0]
+		var arreglo2=arreglo[1];
+		var presentacion_arreglo=arreglo2.split("stock:");
+		var presentacion=presentacion_arreglo[0];
+		var stock_arreglo=presentacion_arreglo[1];
+		var stock_arreglo2=stock_arreglo.split("Precio:");
+		var stock=stock_arreglo2[0];
+		var precio=stock_arreglo2[1];
+		var subtotal=precio;
+		var cantidad=1;
+		var sw_existe = 0;    
+		if(stock > 0)  
+		{
+			var fila = $('#codigo_articulo').val();
+			cadena='<tr id="' + fila + '">';    
+			cadena += '<td><input id="cantidad_'  + fila + '" type="number" min="1" max="' + stock + '" value="1" style="width:50px;heigth:6px"  onchange="cambiaritems(this)" autofocus class="cantidad_"></td>';
+			cadena += "<td style='font-size:60%;'>" + articulo + "</td>";
+			cadena += "<td style='font-size:60%;'>" + presentacion + "</td>";
+			cadena += "<td>" + stock + "</td>";
+			cadena += "<td id='precio'>" + precio + "</td>";
+			cadena += "<td id='subtotal'>"+ subtotal +"</td>";
+			cadena += '<td><button class="btn btn-primary btn-xs"  onclick="sumaritems(this)">+</button><button class="btn btn-secondary btn-xs"  onclick="restaritems(this)">-</button><button class="btn btn-danger btn-xs"  onclick="eliminaritems(this)">x</button></td></tr>';
+			validar_item(fila,cadena);
+			total();
+				   
+		}
+		else
+		{
+		  alert('NO EXISTE STOCK');
+		} 
+	}
+
+	function sumaritems(fila) 
+	{
+    	event.preventDefault();
+		var registro = $(fila).closest('tr').attr('id');
+		var td3 = "#" + registro + " td:eq(3)";
+		var td4 = "#" + registro + " td:eq(4)";
+		var td5 = "#" + registro + " td:eq(5)";
+		var obj_cantidad = '#cantidad_' + registro;
+		var x = $(obj_cantidad).val();
+		var stock =  parseInt($(td3).html())
+		if (stock > x) 
+		{
+			x =++x;
+			$(obj_cantidad).val(x);
+			var sub_total = parseInt($(td4).html()) * x;
+			$(td5).html(sub_total);
+			total();
+		}
+		else
+		{
+			alert("No hay suficiente Stock, solo hay "+stock+" en existencia");;
+		}
+	}
+
+	function restaritems(fila) 
+	{
+    	event.preventDefault();
+		var registro = $(fila).closest('tr').attr('id');
+		var td4 = "#" + registro + " td:eq(4)";
+		var td5 = "#" + registro + " td:eq(5)";
+		var obj_cantidad = '#cantidad_' + registro;
+		var x = $(obj_cantidad).val();  
+		if (x==1)
+		{
+		  alert('MINIMO VALOR DE FACTURACION');
+		}
+		else
+		{
+			x=--x;
+			$(obj_cantidad).val(x);
+			var sub_total = parseInt($(td4).html()) * x;
+			$(td5).html(sub_total);
+			total();
+		}
+	}
+
+	function eliminaritems(fila) 
+	{
+		var seleccion = $(fila).closest('tr');
+		seleccion.remove();
+		total();												
+		return false;   
+	}
+
+	function cambiaritems(fila) 
+	{    
+		var registro = $(fila).closest('tr').attr('id');
+		var td3 = "#" + registro + " td:eq(3)";
+		var td4 = "#" + registro + " td:eq(4)";
+		var td5 = "#" + registro + " td:eq(5)";
+		var obj_cantidad = '#cantidad_' + registro;
+		var x = $(obj_cantidad).val();
+		var r = 1;
+		var stock =  parseInt($(td3).html());
+
+		
+    
+		if (isNaN(x))
+		{
+			alert('Ingrese un valor numerico');
+			$(obj_cantidad).val(r);
+			total();
+		}
+		else if (x==0)
+		{
+			alert('Valor no valido');
+			var r = 1
+			$(obj_cantidad).val(r);
+			//alert('lo hizo')      
+			total();
+		}
+		else if (x=="")
+		{
+			alert('Valor no valido');
+			$(obj_cantidad).val(r);
+			total();
+		}
+		else if (stock < x) 
+		{
+			alert("No hay suficiente Stock, solo hay "+stock+" en existencia");
+			$(obj_cantidad).val(r);
+			total();
+		}
+		else 
+		{
+			var sub_total = parseInt($(td4).html()) * x;
+			
+			$(obj_cantidad).val(x);
+			var sub_total = parseInt($(td4).html()) * x;
+			$(td5).html(sub_total);
+			total();
+		 }
+	} 
+
+	window.onload = function()
+	{
+		var fecha = new Date(); //Fecha actual
+		var mes = fecha.getMonth()+1; //obteniendo mes
+		var dia = fecha.getDate(); //obteniendo dia
+		var ano = fecha.getFullYear(); //obteniendo año
+		if( dia < 10 )
+			dia ='0' + dia; //agrega cero si el menor de 10
+		if( mes < 10 )
+			mes ='0' + mes //agrega cero si el menor de 10
+		document.getElementById('fechaActual').value=ano+"-"+mes+"-"+dia;
+	};
+
+	$("#facturar").click(function() 
+	{  
+		var campos = $("[id*=cantidad_]");
+		var cliente = $("#cliente").val(); 
+		var fecha = $("#fechaActual").val();
+		var ci = $("#ci").val();
+		var total = $("#totaldolares").text();
+		var totalbolivares = $("#totalbolivares").text();
+		var k = 0;
+		var registros_detalle = "";
+		$("#tblProductos #cuerpo tr").each(function() { 
+			var cantidad = campos[k].value;
+			var articulo_id = campos[k].id;
+			articulos = articulo_id.split("_");
+			articulo_id = parseInt(articulos[1]);
+			var self = $(this);
+			var articulo = self.find("td:eq(1)").text();
+			var pvp = self.find("td:eq(4)").text();
+			var subtotal = self.find("td:eq(5)").text();
+			registros_detalle += articulo_id + ";" + cantidad + ";" + pvp + ";" + subtotal + "@";
+			k++;
+		});
+		
+		registros_detalle = registros_detalle.substring(0, registros_detalle.length - 1);
+		$.ajax({
+			type: "POST", 
+			data: {"fecha":fecha, "ci":ci, "cliente":cliente , "total":total, "totalbolivares": totalbolivares, "detalle": registros_detalle, "csrfmiddlewaretoken":"{{csrf_token}}"},
+			url:"{% url 'registrarVentaArticulo'  %}",             
+			success : function(r){        
+			},
+			error: function(jqXHR, textStatus, error){
+			  console.log(error)
+			},
+			complete: function(xhr, status){
+			  console.log("finalizado")
+			  alert('Venta realizada')
+			},
+		  }); 
+	}); 
+</script>
+{% endblock %}
